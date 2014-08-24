@@ -28,8 +28,8 @@ classdef GeneratedFunctionsSystemTest < TestCase
             generativeTransformsCount = 15;
             
             self.generativeTransforms = TransformsGenerator.generate('int', generativeTransformsCount);
-            correlantCalculator = kunchenko.onedimentional.CorrelantCalculator();
-            self.generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.lowerBound:self.step:self.higherBound, self.step, self.generativeTransforms, self.cardinalFunctionIndex, correlantCalculator);
+            calculateCorrelantFunction = @calculateCorrelant;
+            self.generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.lowerBound:self.step:self.higherBound, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
         end
         
         function testIntervalConstructor(self)
@@ -52,8 +52,8 @@ classdef GeneratedFunctionsSystemTest < TestCase
         function testBuild(self)
             import kunchenko.*;
             template = self.generativeTransforms{self.cardinalFunctionIndex}(self.lowerBound:self.step:self.higherBound);
-            correlantCalculator = kunchenko.onedimentional.CorrelantCalculator();
-            generatedFunctionsSystemFromTemplate = GeneratedFunctionsSystem.build(template, self.step, self.generativeTransforms, self.cardinalFunctionIndex, correlantCalculator);
+            calculateCorrelantFunction = @calculateCorrelant;
+            generatedFunctionsSystemFromTemplate = GeneratedFunctionsSystem.build(template, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
             generatedFunctions = generatedFunctionsSystemFromTemplate.generatedFunctions;
             for i = 1:length(generatedFunctionsSystemFromTemplate)
                 assertEqual(self.generativeTransforms{i}(self.lowerBound:self.step:self.higherBound), generatedFunctions{i});
@@ -80,8 +80,8 @@ classdef GeneratedFunctionsSystemTest < TestCase
             stepLocal = 0.01;
             domain = 0:stepLocal:1;
             cardinalFunctionIndexLocal = 2;
-            correlantCalculator = kunchenko.onedimentional.CorrelantCalculator();
-            generatedFunctionsSystemLocal = GeneratedFunctionsSystem.build(domain, stepLocal, generativeTransformsLocal, cardinalFunctionIndexLocal, correlantCalculator);
+            calculateCorrelantFunction = @calculateCorrelant;
+            generatedFunctionsSystemLocal = GeneratedFunctionsSystem.build(domain, stepLocal, generativeTransformsLocal, cardinalFunctionIndexLocal, calculateCorrelantFunction);
             
             cardinalFunctionIndexLocalBefore = [  1   0.5   1/3
                                                 0.5   1/3  0.25

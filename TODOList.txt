@@ -1,0 +1,13 @@
++ create dummy class and test
++ implement basic image loading
++ implement generative transforms constructing
++ implement correlant calculating and test(!) it
++ create TODO sublist inside KunchenkoRecognizer as dummy stubs for future implementation
++ implement basic algorithm stages
++ correlants caching to avoid redundant calculations
++ refactor all to extract abstract template method for KP-algorithm
++ move correlants calucation logic from GeneratedFunctionsSystem to CorrelantCalculator
++ implement 2D approximation just to ensure that it works
+- implement iterator over 2D signal and polynomial
+- create image tests
+- optimize performance of algorhitm
