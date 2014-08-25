@@ -17,14 +17,14 @@ classdef TransformsGeneratorTest < TestCase
         end
         
         function testIntegerPowers(self)
-            generativeTransforms = kunchenko.TransformsGenerator.generate('int', 5);
+            generativeTransforms = generateGenerativeTransforms('int', 5);
             for i = 1:length(generativeTransforms)
                 assertEqual(generativeTransforms{i}(self.dataArray), self.dataArray.^(i-1));
             end
         end
         
         function testInvertIntegerPowers(self)
-            generativeTransforms = kunchenko.TransformsGenerator.generate('invertInt', 5);
+            generativeTransforms = generateGenerativeTransforms('invertInt', 5);
             assertEqual(generativeTransforms{1}(self.dataArray), self.dataArray.^0);
             for i = 2:length(generativeTransforms)
                 assertEqual(generativeTransforms{i}(self.dataArray), self.dataArray.^(1/(i-1)));
@@ -32,7 +32,7 @@ classdef TransformsGeneratorTest < TestCase
         end
         
         function testExpPowers(self)
-            generativeTransforms = kunchenko.TransformsGenerator.generate('exp', 5);
+            generativeTransforms = generateGenerativeTransforms('exp', 5);
             assertEqual(generativeTransforms{1}(self.dataArray), self.dataArray.^0);
             for i = 2:length(generativeTransforms)
                 assertEqual(generativeTransforms{i}(self.dataArray), exp((i-1)*self.dataArray));
@@ -40,14 +40,14 @@ classdef TransformsGeneratorTest < TestCase
         end
         
         function testSinPowers(self)
-            generativeTransforms = kunchenko.TransformsGenerator.generate('sin', 5);
+            generativeTransforms = generateGenerativeTransforms('sin', 5);
             for i = 1:length(generativeTransforms)
                 assertEqual(generativeTransforms{i}(self.dataArray), sin(0.5*pi*self.dataArray).^(i-1));
             end
         end
         
         function testIllegalTypePowers(~)
-            methodWithException = @()kunchenko.TransformsGenerator.generate('genious', 1);
+            methodWithException = @()generateGenerativeTransforms('genious', 1);
             assertExceptionThrown(methodWithException, 'SwitchChk:NoSuchCase');
             
         end

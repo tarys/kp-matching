@@ -27,7 +27,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
             
             generativeTransformsCount = 15;
             
-            self.generativeTransforms = TransformsGenerator.generate('int', generativeTransformsCount);
+            self.generativeTransforms = generateGenerativeTransforms('int', generativeTransformsCount);
             calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
             self.generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.lowerBound:self.step:self.higherBound, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
         end
@@ -76,7 +76,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
         
         function testInsertAndCalculateNewCorrelant(~)
             import kunchenko.*;
-            generativeTransformsLocal = TransformsGenerator.generate('int', 3);
+            generativeTransformsLocal = generateGenerativeTransforms('int', 3);
             stepLocal = 0.01;
             domain = 0:stepLocal:1;
             cardinalFunctionIndexLocal = 2;

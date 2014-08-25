@@ -24,8 +24,8 @@ classdef KunchenkoApproximatorTest < TestCase
             self.domain = 0:self.step:1;
             
             cardinalFunctionIndex = 2;
-            self.generated4FunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, TransformsGenerator.generate('int', 4), cardinalFunctionIndex, @calculateOneDimentionalCorrelant);
-            self.generated5FunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, TransformsGenerator.generate('int', 5), cardinalFunctionIndex, @calculateOneDimentionalCorrelant);
+            self.generated4FunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, generateGenerativeTransforms('int', 4), cardinalFunctionIndex, @calculateOneDimentionalCorrelant);
+            self.generated5FunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, generateGenerativeTransforms('int', 5), cardinalFunctionIndex, @calculateOneDimentionalCorrelant);
             
             generativeTransformsWithIncludedCardinalFunction{1} = @(x)x.^0;
             generativeTransformsWithIncludedCardinalFunction{2} = @(x)x.^1;

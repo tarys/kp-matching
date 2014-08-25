@@ -51,7 +51,7 @@ classdef CorrelantCalculatorTest < TestCase
             generativeTransformName = {'int', 'invertInt', 'exp', 'sin'};
             % testin all generative transforms types
             for k = 1:length(generativeTransformName)
-                generativeTransforms = TransformsGenerator.generate(generativeTransformName{k}, self.correlantsQuantity);
+                generativeTransforms = generateGenerativeTransforms(generativeTransformName{k}, self.correlantsQuantity);
                 calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
                 generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.x, self.step, generativeTransforms, 2, calculateCorrelantFunction);
                 for i = 1:self.correlantsQuantity
