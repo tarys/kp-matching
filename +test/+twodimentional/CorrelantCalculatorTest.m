@@ -1,6 +1,5 @@
 classdef CorrelantCalculatorTest < TestCase
     properties
-        correlantCalculator
     end
     
     methods
@@ -13,7 +12,7 @@ classdef CorrelantCalculatorTest < TestCase
         
         % classic xUnit set up
         function setUp(self)
-            self.correlantCalculator = kunchenko.twodimentional.CorrelantCalculator();
+            
         end
         
         function testCalculateCorrelant(self)
@@ -23,13 +22,12 @@ classdef CorrelantCalculatorTest < TestCase
             f = @(x, y)x.^2 + y.^2;
             [X, Y] = meshgrid(lowBound:step:upperBound);
             functionValues = f(X, Y);
-            correlant = self.correlantCalculator.calculateCorrelant(functionValues, functionValues, step);
+            correlant = calculateTwoDimentionalCorrelant(functionValues, functionValues, step);
             dblquadResult = dblquad(@(x, y)(f(x, y).*f(x, y)), lowBound, upperBound, lowBound, upperBound);
             assertElementsAlmostEqual(correlant, dblquadResult, 'absolute', step);
         end
         % classic xUnit tear down
         function tearDown(self)
-            self.correlantCalculator = [];
         end
     end
 end

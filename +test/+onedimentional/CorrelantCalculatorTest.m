@@ -52,7 +52,7 @@ classdef CorrelantCalculatorTest < TestCase
             % testin all generative transforms types
             for k = 1:length(generativeTransformName)
                 generativeTransforms = TransformsGenerator.generate(generativeTransformName{k}, self.correlantsQuantity);
-                calculateCorrelantFunction = @calculateCorrelant;
+                calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
                 generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.x, self.step, generativeTransforms, 2, calculateCorrelantFunction);
                 for i = 1:self.correlantsQuantity
                     for j = 1:self.correlantsQuantity

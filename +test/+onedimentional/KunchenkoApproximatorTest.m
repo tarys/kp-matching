@@ -24,15 +24,15 @@ classdef KunchenkoApproximatorTest < TestCase
             self.domain = 0:self.step:1;
             
             cardinalFunctionIndex = 2;
-            self.generated4FunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, TransformsGenerator.generate('int', 4), cardinalFunctionIndex, @calculateCorrelant);
-            self.generated5FunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, TransformsGenerator.generate('int', 5), cardinalFunctionIndex, @calculateCorrelant);
+            self.generated4FunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, TransformsGenerator.generate('int', 4), cardinalFunctionIndex, @calculateOneDimentionalCorrelant);
+            self.generated5FunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, TransformsGenerator.generate('int', 5), cardinalFunctionIndex, @calculateOneDimentionalCorrelant);
             
             generativeTransformsWithIncludedCardinalFunction{1} = @(x)x.^0;
             generativeTransformsWithIncludedCardinalFunction{2} = @(x)x.^1;
             generativeTransformsWithIncludedCardinalFunction{3} = @(x)x.^1;
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^2;
             generativeTransformsWithIncludedCardinalFunction{5} = @(x)x.^3;
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateCorrelant);
+            generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateOneDimentionalCorrelant);
             
             self.resultOfApproximationWithIncludedCardinalFunction = KunchenkoApproximator.approximate(generatedFunctionsSystem);
             self.absoluteTolerance = 1.0e-5;

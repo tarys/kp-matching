@@ -31,8 +31,7 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^2;
             generativeTransformsWithIncludedCardinalFunction{5} = @(x)x.^3;
             
-            correlantCalculator = kunchenko.twodimentional.CorrelantCalculator();
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, correlantCalculator);
+            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
             
             resultOfApproximationWithIncludedCardinalFunction = KunchenkoApproximator.approximate(generatedFunctionsSystem);
             
@@ -55,8 +54,7 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^3;
             generativeTransformsWithIncludedCardinalFunction{5} = @(x)x.^4;
             
-            correlantCalculator = kunchenko.twodimentional.CorrelantCalculator();
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, correlantCalculator);
+            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
             
             matcher = KunchenkoTemplateMatcher(signal, generatedFunctionsSystem);
             result = matcher.match();
@@ -80,8 +78,7 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             generativeTransformsWithIncludedCardinalFunction{3} = @(x)x.^2;
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^3;
             
-            correlantCalculator = kunchenko.twodimentional.CorrelantCalculator();
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, correlantCalculator);
+            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
             
             matcher = KunchenkoTemplateMatcher(signal, generatedFunctionsSystem);
             result = matcher.match();
@@ -110,8 +107,7 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             generativeTransformsWithIncludedCardinalFunction{3} = @(x)x.^2;
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^3;
             
-            correlantCalculator = kunchenko.twodimentional.CorrelantCalculator();
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, correlantCalculator);
+            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
             
             matcher = KunchenkoTemplateMatcher(signal, generatedFunctionsSystem);
             result = matcher.match();

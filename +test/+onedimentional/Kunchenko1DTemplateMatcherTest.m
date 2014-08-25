@@ -28,7 +28,7 @@ classdef Kunchenko1DTemplateMatcherTest < TestCase
             
             cardinalFunctionIndex = 2;
             self.generativeTransforms = TransformsGenerator.generate('int', 4);
-            calculateCorrelantFunction = @calculateCorrelant;
+            calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
             generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.template, self.step, self.generativeTransforms, cardinalFunctionIndex, calculateCorrelantFunction);            
             self.matcher = KunchenkoTemplateMatcher(self.signal, generatedFunctionsSystem);
         end

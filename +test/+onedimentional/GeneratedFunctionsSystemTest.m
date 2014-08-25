@@ -28,7 +28,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
             generativeTransformsCount = 15;
             
             self.generativeTransforms = TransformsGenerator.generate('int', generativeTransformsCount);
-            calculateCorrelantFunction = @calculateCorrelant;
+            calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
             self.generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.lowerBound:self.step:self.higherBound, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
         end
         
@@ -52,7 +52,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
         function testBuild(self)
             import kunchenko.*;
             template = self.generativeTransforms{self.cardinalFunctionIndex}(self.lowerBound:self.step:self.higherBound);
-            calculateCorrelantFunction = @calculateCorrelant;
+            calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
             generatedFunctionsSystemFromTemplate = GeneratedFunctionsSystem.build(template, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
             generatedFunctions = generatedFunctionsSystemFromTemplate.generatedFunctions;
             for i = 1:length(generatedFunctionsSystemFromTemplate)
@@ -80,7 +80,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
             stepLocal = 0.01;
             domain = 0:stepLocal:1;
             cardinalFunctionIndexLocal = 2;
-            calculateCorrelantFunction = @calculateCorrelant;
+            calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
             generatedFunctionsSystemLocal = GeneratedFunctionsSystem.build(domain, stepLocal, generativeTransformsLocal, cardinalFunctionIndexLocal, calculateCorrelantFunction);
             
             cardinalFunctionIndexLocalBefore = [  1   0.5   1/3
