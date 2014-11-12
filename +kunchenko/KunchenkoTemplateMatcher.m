@@ -67,7 +67,7 @@ classdef KunchenkoTemplateMatcher < handle
         function result = approximateWindowSignal(self, windowSignal)
             functions = self.generatedFunctionsSystem;
             functions.insert(windowSignal, self.generatedFunctionsSystem.cardinalFunctionIndex);
-            result = kunchenko.KunchenkoApproximator.approximate(functions);
+            result = approximate(functions);
             functions.remove(self.generatedFunctionsSystem.cardinalFunctionIndex);
         end
 

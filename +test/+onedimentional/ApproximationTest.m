@@ -1,4 +1,4 @@
-classdef KunchenkoApproximatorTest < TestCase
+classdef ApproximationTest < TestCase
     properties
         step
         domain
@@ -12,14 +12,14 @@ classdef KunchenkoApproximatorTest < TestCase
         % The first method in the methods block is the constructor.
         % It takes the desired test method name as its input argument,
         % and it passes that input along to the base class constructor
-        function self = KunchenkoApproximatorTest(name)
+        function self = ApproximationTest(name)
             self = self@TestCase(name);
         end
         
         % classic xUnit set up
         function setUp(self)
             import kunchenko.*;
-            
+          
             self.step = .01;
             self.domain = 0:self.step:1;
             
@@ -34,15 +34,14 @@ classdef KunchenkoApproximatorTest < TestCase
             generativeTransformsWithIncludedCardinalFunction{5} = @(x)x.^3;
             generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.domain, self.step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateOneDimentionalCorrelant);
             
-            self.resultOfApproximationWithIncludedCardinalFunction = KunchenkoApproximator.approximate(generatedFunctionsSystem);
+            self.resultOfApproximationWithIncludedCardinalFunction = approximate(generatedFunctionsSystem);
             self.absoluteTolerance = 1.0e-5;
         end
         
         % numeric example from Kunchenko's book
         function testCenteredCorrelantsCalculationInt5(self)
-            import kunchenko.*;
-            
-            result = KunchenkoApproximator.approximate(self.generated5FunctionsSystem);
+           
+            result = approximate(self.generated5FunctionsSystem);
             
             assertEqual(result.centeredCorrelantsMatrix, result.centeredCorrelantsMatrix'); % check symmetry
             
@@ -64,9 +63,8 @@ classdef KunchenkoApproximatorTest < TestCase
         
         % numeric example from Kunchenko's book
         function testApproximationForIntegerSystemWithFourElements(self)
-            import kunchenko.KunchenkoApproximator;
             
-            result = KunchenkoApproximator.approximate(self.generated4FunctionsSystem);
+            result = approximate(self.generated4FunctionsSystem);
             
             assertEqual(result.systemMatrix, result.systemMatrix'); % check symmetry
             assertElementsAlmostEqual(result.alphaVector, [2.25; -1.4], 'absolute', 0.01);
@@ -77,9 +75,8 @@ classdef KunchenkoApproximatorTest < TestCase
         
         % numeric example from Kunchenko's book
         function testApproximationForIntegerSystemWithFiveElements(self)
-            import kunchenko.KunchenkoApproximator;
             
-            result = KunchenkoApproximator.approximate(self.generated5FunctionsSystem);
+            result = approximate(self.generated5FunctionsSystem);
             
             assertEqual(result.systemMatrix, result.systemMatrix'); % check symmetry
             assertElementsAlmostEqual(result.alphaVector, [3.9375; -5.6; 2.625], 'absolute', 0.01);

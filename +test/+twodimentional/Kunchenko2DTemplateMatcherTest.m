@@ -33,7 +33,7 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             
             generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
             
-            resultOfApproximationWithIncludedCardinalFunction = KunchenkoApproximator.approximate(generatedFunctionsSystem);
+            resultOfApproximationWithIncludedCardinalFunction = approximate(generatedFunctionsSystem);
             
             efficiency = resultOfApproximationWithIncludedCardinalFunction.efficiency;
             expectedEfficiency = 1;
