@@ -32,7 +32,7 @@ classdef KunchenkoApproximator < handle
             import kunchenko.KunchenkoApproximator;
             
             correlantsMatrix = generatedFunctionsSystem.correlantsMatrix;
-            centeredCorrelantsMatrix = KunchenkoApproximator.calculateCenteredCorrelantsMatrix(correlantsMatrix);
+            centeredCorrelantsMatrix = calculateCenteredCorrelantsMatrix(correlantsMatrix);
             [systemMatrix freeVector] = KunchenkoApproximator.buildLinearAlgebraicEquationSystemParameters(centeredCorrelantsMatrix, generatedFunctionsSystem.cardinalFunctionIndex);
             alphaVector = KunchenkoApproximator.solveLinearAlgebraicEquationSystem(systemMatrix, freeVector);
             inforkune = KunchenkoApproximator.calculateInforcune(alphaVector, freeVector);
@@ -59,17 +59,6 @@ classdef KunchenkoApproximator < handle
         
         function submatrix = excludeColFromMatrix(matrix, colNumber)
             submatrix = kunchenko.KunchenkoApproximator.excludeRowFromMatrix(matrix', colNumber)';
-        end
-        
-        function centeredCorrelantsMatrix = calculateCenteredCorrelantsMatrix(correlantsMatrix)
-            rowCount = length(correlantsMatrix);
-            colCount = length(correlantsMatrix(1, :));
-            centeredCorrelantsMatrix = zeros(rowCount, colCount);
-            for i = 1:rowCount
-                for j = 1:colCount
-                    centeredCorrelantsMatrix(i, j) = correlantsMatrix(i, j) - (correlantsMatrix(1, i) * correlantsMatrix(1, j)) / correlantsMatrix(1, 1);
-                end
-            end
         end
         
         function [systemMatrix freeVector] = buildLinearAlgebraicEquationSystemParameters(centeredCorrelantsMatrix, cardinalFunctionIndex)
