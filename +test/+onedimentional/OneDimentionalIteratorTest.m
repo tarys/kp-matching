@@ -23,7 +23,7 @@ classdef OneDimentionalIteratorTest < TestCase
             zeroPattern = zeros(1, length(self.template));
             signal = [zeroPattern self.template zeroPattern -self.template zeroPattern self.template zeroPattern];
             
-            self.iterator = onedimentional.OneDimentionalIterator(signal, length(self.template));
+            self.iterator = createIterator(signal, size(self.template));
         end
         
         function testGetWindowArraysCount(self)

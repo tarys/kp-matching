@@ -8,6 +8,9 @@
 + refactor all to extract abstract template method for KP-algorithm
 + move correlants calucation logic from GeneratedFunctionsSystem to CorrelantCalculator
 + implement 2D approximation just to ensure that it works
-- implement iterator over 2D signal and polynomial
++ implement iterator over 2D signal and polynomial
+- make all iterators' methods static (which is equivalent to stateless)
+- refactor them to separate functions
+- test functional version on Scilab
 - create image tests
 - optimize performance of algorhitm

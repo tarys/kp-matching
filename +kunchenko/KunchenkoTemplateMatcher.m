@@ -11,15 +11,14 @@ classdef KunchenkoTemplateMatcher < handle
     
     methods
         function obj = KunchenkoTemplateMatcher(signal, generatedFunctionsSystem)
-            import kunchenko.IteratorFactory;
             signalSize = size(signal);
             templateSize = size(generatedFunctionsSystem.domain);
             
             obj.generatedFunctionsSystem = generatedFunctionsSystem;            
-            obj.signalIterator = kunchenko.IteratorFactory.getIterator(signal, templateSize);            
-            obj.effectogramIterator = kunchenko.IteratorFactory.getIterator(zeros(signalSize - templateSize + 1), size(1));            
-            obj.polynomialIterator = kunchenko.IteratorFactory.getIterator(zeros(signalSize), templateSize);
-            obj.temporaryEfficiencyIterator = kunchenko.IteratorFactory.getIterator(zeros(signalSize), templateSize);           
+            obj.signalIterator = createIterator(signal, templateSize);            
+            obj.effectogramIterator = createIterator(zeros(signalSize - templateSize + 1), size(1));            
+            obj.polynomialIterator = createIterator(zeros(signalSize), templateSize);
+            obj.temporaryEfficiencyIterator = createIterator(zeros(signalSize), templateSize);           
         end
     end
     

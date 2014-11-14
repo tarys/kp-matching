@@ -22,13 +22,13 @@ classdef AbstractIterator < handle
         end
         
         % Returns "true" if more windows left
-        function result = hasNext(self)
+        function result = hasNext(self, windowIndex, windowsCount)
             result = self.windowIndex < self.windowsCount;
         end
         
         % Returns next window signal. If end of sigal is reached just returns last one on each further call
         function windowArray = next(self)
-            if self.hasNext()
+            if self.hasNext(self.windowIndex, self.windowsCount)
                 self.windowIndex = self.windowIndex + 1;
             end
             windowArray = self.getWindow(self.windowIndex);
