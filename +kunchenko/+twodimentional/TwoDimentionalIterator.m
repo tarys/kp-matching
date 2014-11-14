@@ -1,9 +1,16 @@
-classdef TwoDimentionalIterator < kunchenko.AbstractIterator
+classdef TwoDimentionalIterator < handle
     %TWODIMENTIONALITERATOR provides iteration over 2D input array
     properties
+        array
+        windowsCount
         windowHeight
         windowWidth
         windowIndecies
+    end
+    
+    properties(SetAccess = protected, GetAccess = public)        
+        windowIndex
+        windowSize
     end
     
     methods
@@ -11,12 +18,33 @@ classdef TwoDimentionalIterator < kunchenko.AbstractIterator
         % INPUT:
         %   • array        - to iterate over
         function obj = TwoDimentionalIterator(array, windowSize)
-            obj = obj@kunchenko.AbstractIterator(array, windowSize);
+            obj.windowIndex = 0;
+            obj.array = array;            
+            obj.windowSize = windowSize;
+            
             obj.windowHeight = obj.windowSize(1);
             obj.windowWidth = obj.windowSize(2);
             obj.windowsCount = obj.calculateWindowsCount();
             obj.mapWindowIndecies();
         end
+        
+        % Returns "true" if more windows left
+        function result = hasNext(self)
+            result = self.windowIndex < self.windowsCount;
+        end
+        
+        % Returns next window signal. If end of sigal is reached just returns last one on each further call
+        function windowArray = next(self)
+            if self.hasNext()
+                self.windowIndex = self.windowIndex + 1;
+            end
+            windowArray = self.getWindow(self.windowIndex);
+        end
+        
+        function setCurrentWindow(self, array)
+            self.setWindow(self.windowIndex, array);
+        end
+
         
         function windowArray = getWindow(self, index)
             rowIndex = self.windowIndecies(index, 1);
