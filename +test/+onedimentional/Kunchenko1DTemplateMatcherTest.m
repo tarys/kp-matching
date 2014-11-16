@@ -1,14 +1,6 @@
 classdef Kunchenko1DTemplateMatcherTest < TestCase
     %KUNCHENKORECOGNIZERTEST 1D recognition implementation tests
     
-    properties
-        step
-        generativeTransforms
-        template
-        signal
-        matcher
-    end
-    
     methods
         % The first method in the methods block is the constructor.
         % It takes the desired test method name as its input argument,
@@ -19,31 +11,35 @@ classdef Kunchenko1DTemplateMatcherTest < TestCase
         
         % classic xUnit set up
         function setUp(self)
-            import kunchenko.*;
-            
-            self.step = .1;
-            [~, self.template] = template1(self.step);
-            zeroPattern = zeros(1, length(self.template));
-            self.signal = [zeroPattern self.template zeroPattern -self.template zeroPattern self.template zeroPattern];
-            
-            cardinalFunctionIndex = 2;
-            self.generativeTransforms = generateGenerativeTransforms('int', 4);
-            calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.template, self.step, self.generativeTransforms, cardinalFunctionIndex, calculateCorrelantFunction);            
-            self.matcher = KunchenkoTemplateMatcher(self.signal, generatedFunctionsSystem);
         end
         
         function testCompareOOPAndProceduralRecognition(self)
-            tic;
+            step = .1;
+            [~, template] = template1(step);
+            zeroPattern = zeros(1, length(template));
+            signal = [zeroPattern template zeroPattern -template zeroPattern template zeroPattern];
             
-            oopRecognitionResult = self.matcher.match();
+            cardinalFunctionIndex = 2;
+            generativeTransforms = generateGenerativeTransforms('int', 4);
+            calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
+
+            
+            tic;
+
+            oopRecognitionResult = match(...
+                signal, ...
+                template, ...
+                step, ...
+                generativeTransforms, ...
+                cardinalFunctionIndex, ...
+                calculateCorrelantFunction);
             
             oopElapsed = toc;
             
             tic;
             
-            [polynomial, ~, effectogram] = KunchenkoNew(self.signal, self.template, self.generativeTransforms);
-            proceduralRecognitionResult.signal = self.signal;
+            [polynomial, ~, effectogram] = KunchenkoNew(signal, template, generativeTransforms);
+            proceduralRecognitionResult.signal = signal;
             proceduralRecognitionResult.polynomial = polynomial;
             proceduralRecognitionResult.effectogram = effectogram;
             
@@ -60,8 +56,6 @@ classdef Kunchenko1DTemplateMatcherTest < TestCase
         
         % classic xUnit tear down
         function tearDown(self)
-            self.template = [];
-            self.signal = [];
         end
         
         % util methods

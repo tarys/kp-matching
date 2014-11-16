@@ -1,9 +1,6 @@
 classdef Kunchenko2DTemplateMatcherTest < TestCase
     %KUNCHENKORECOGNIZERTEST 2D recognition implementation tests
     
-    properties
-    end
-    
     methods
         % The first method in the methods block is the constructor.
         % It takes the desired test method name as its input argument,
@@ -48,16 +45,14 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             signal = template;
             
             cardinalFunctionIndex = 2;
+            
             generativeTransformsWithIncludedCardinalFunction{1} = @(x)x.^0;
             generativeTransformsWithIncludedCardinalFunction{2} = @(x)x.^1;
             generativeTransformsWithIncludedCardinalFunction{3} = @(x)x.^2;
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^3;
             generativeTransformsWithIncludedCardinalFunction{5} = @(x)x.^4;
             
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
-            
-            matcher = KunchenkoTemplateMatcher(signal, generatedFunctionsSystem);
-            result = matcher.match();
+            result = match(signal, template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
             
             assertEqual(signal, result.signal);
             assertEqual(signal, result.polynomial);
@@ -78,10 +73,7 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             generativeTransformsWithIncludedCardinalFunction{3} = @(x)x.^2;
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^3;
             
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
-            
-            matcher = KunchenkoTemplateMatcher(signal, generatedFunctionsSystem);
-            result = matcher.match();
+            result = match(signal, template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);           
             
             assertEqual(signal, result.signal);
             expectedEffectogram = [                0 0.333396735481965  0.625418936522053                  1  0.183846799849406 -0.0335441511860352                 0;
@@ -107,10 +99,8 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             generativeTransformsWithIncludedCardinalFunction{3} = @(x)x.^2;
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^3;
             
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
-            
-            matcher = KunchenkoTemplateMatcher(signal, generatedFunctionsSystem);
-            result = matcher.match();
+            result = match(signal, template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
+
             assertElementsAlmostEqual(1, result.effectogram(1, 4), 'absolute', 10e-5);
             assertElementsAlmostEqual(1, result.effectogram(7, 1), 'absolute', 10e-5);
             assertElementsAlmostEqual(1, result.effectogram(7, 7), 'absolute', 10e-5);
