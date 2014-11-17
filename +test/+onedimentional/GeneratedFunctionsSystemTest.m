@@ -38,7 +38,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
         
         function testGetGeneratedFunction(self)
             for i = 1:length(self.generativeTransforms)
-                assertEqual(self.generativeTransforms{i}(self.lowerBound:self.step:self.higherBound), self.generatedFunctionsSystem.getGeneratedFunction(i));
+                assertEqual(self.generativeTransforms{i}(self.lowerBound:self.step:self.higherBound), self.generatedFunctionsSystem.generatedFunctions{i});
             end
         end
         
@@ -61,17 +61,17 @@ classdef GeneratedFunctionsSystemTest < TestCase
         end
         
         function testInsertRemoveTemplate(self)
-            template = self.generatedFunctionsSystem.getGeneratedFunction(self.cardinalFunctionIndex);
-            oldSize = self.generatedFunctionsSystem.getSize();
+            template = self.generatedFunctionsSystem.generatedFunctions{self.cardinalFunctionIndex};
+            oldSize = length(self.generatedFunctionsSystem.generatedFunctions);
             
             self.generatedFunctionsSystem.insert(template, self.cardinalFunctionIndex);
             
-            assertEqual(oldSize + 1, self.generatedFunctionsSystem.getSize());
-            assertEqual(template, self.generatedFunctionsSystem.getGeneratedFunction(self.cardinalFunctionIndex));
+            assertEqual(oldSize + 1, length(self.generatedFunctionsSystem.generatedFunctions));
+            assertEqual(template, self.generatedFunctionsSystem.generatedFunctions{self.cardinalFunctionIndex});
             
             self.generatedFunctionsSystem.remove(self.cardinalFunctionIndex);
             
-            assertEqual(oldSize, self.generatedFunctionsSystem.getSize());
+            assertEqual(oldSize, length(self.generatedFunctionsSystem.generatedFunctions));
         end
         
         function testInsertAndCalculateNewCorrelant(~)
@@ -87,8 +87,8 @@ classdef GeneratedFunctionsSystemTest < TestCase
                                                 0.5   1/3  0.25
                                                 1/3  0.25   0.2];
             assertElementsAlmostEqual(cardinalFunctionIndexLocalBefore, generatedFunctionsSystemLocal.correlantsMatrix, 'absolute', 10e-5);
-            
-            functionToInsert = generatedFunctionsSystemLocal.getGeneratedFunction(cardinalFunctionIndexLocal);
+
+            functionToInsert = generatedFunctionsSystemLocal.generatedFunctions{cardinalFunctionIndexLocal};
             insertionIndex = cardinalFunctionIndexLocal;
             generatedFunctionsSystemLocal.insert(functionToInsert, insertionIndex);
             

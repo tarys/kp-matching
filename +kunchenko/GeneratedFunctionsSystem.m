@@ -48,36 +48,47 @@ classdef GeneratedFunctionsSystem < handle
             end
             obj.cardinalFunctionIndex = cardinalFunctionIndex;
             obj.calculateCorrelantFunction = calculateCorrelantFunction;
-            obj.calculateCorrelantsMatrix();
+            obj.correlantsMatrix = calculateCorrelantsMatrix(calculateCorrelantFunction, obj.generatedFunctions, step);
         end
         
     end
     
     methods
         
-        % Returns generated function with specified index
-        %   INPUT:
-        %       • index -   index of function to be retrieved
-        function result = getGeneratedFunction(self, index)
-            result = self.generatedFunctions{index};
-        end
-        
-        % Returns size of generated functions system
-        function size = getSize(self)
-            size = length(self.generatedFunctions);
-        end
-        
         % Insert generated function into specified position
-        function insert(self, functionToInsert, index)
-            self.insertGeneratedFunction(functionToInsert, index);
-            correlantsColToAdd = self.calculateNewCorrelants(index);
-            self.populateCorrelantsMatrix(correlantsColToAdd, index);
+        function insert(self, functionToInsert, insertionIndex)
+            self.generatedFunctions = [self.generatedFunctions(1:(insertionIndex - 1)) functionToInsert self.generatedFunctions((insertionIndex):end)];
+            
+            generatedFunctionsCount = length(self.generatedFunctions);
+            correlantsColToAdd = zeros(generatedFunctionsCount, 1);
+            for i = 1:generatedFunctionsCount
+                correlantsColToAdd(i) = self.calculateCorrelantFunction(self.generatedFunctions{i}, self.generatedFunctions{insertionIndex}, self.step);
+            end
+            
+            
+            % populateCorrelantsMatrix
+            tempMatrix1 = self.correlantsMatrix;
+            tempMatrix2 = [tempMatrix1(:, 1:(insertionIndex - 1)) zeros(generatedFunctionsCount - 1, 1) tempMatrix1(:, insertionIndex:end)];
+            newCorrelantsMatrix = [tempMatrix2(1:(insertionIndex - 1), :);
+                zeros(1, generatedFunctionsCount);
+                tempMatrix2(insertionIndex:end, :)];
+            newCorrelantsMatrix(:, insertionIndex) = correlantsColToAdd;
+            newCorrelantsMatrix(insertionIndex, :) = correlantsColToAdd';
+            self.correlantsMatrix = newCorrelantsMatrix;
         end
         
         % Remove generated function by its index
         function remove(self, index)
-            self.removeCorrelantsOfGeneratedFunction(index);
-            self.removeGeneratedFunction(index);            
+            % removeCorrelantsOfGeneratedFunction
+            tempMatrix1 = self.correlantsMatrix;
+            tempMatrix2 = [tempMatrix1(:, 1:(index - 1)) tempMatrix1(:, (index + 1):end)];
+            newCorrelantsMatrix = [tempMatrix2(1:(index - 1), :);
+                                   tempMatrix2((index + 1):end, :)];
+            self.correlantsMatrix = newCorrelantsMatrix; 
+            
+           % removeGeneratedFunction 
+           self.generatedFunctions = [self.generatedFunctions(1:(index - 1)) self.generatedFunctions((index + 1):end)]; 
+            
         end
         
         % Returns cell-array of generated functions without cardinal function
@@ -89,55 +100,8 @@ classdef GeneratedFunctionsSystem < handle
     end
     
     methods(Access = private)
-        function calculateCorrelantsMatrix(self)
-            generatedFunctionsCount = self.getSize();
-            self.correlantsMatrix = zeros(generatedFunctionsCount, generatedFunctionsCount);
-            for i = 1:generatedFunctionsCount
-                for j = 1:generatedFunctionsCount
-                    self.correlantsMatrix(i, j) = self.calculateCorrelant(i, j);
-                end
-            end
-        end
         
-        function correlant = calculateCorrelant(self, i, j)
-            correlant = self.calculateCorrelantFunction(self.getGeneratedFunction(i), self.getGeneratedFunction(j), self.step);
-        end
-        
-        function insertGeneratedFunction(self, functionToInsert, index)
-            self.generatedFunctions = [self.generatedFunctions(1:(index - 1)) functionToInsert self.generatedFunctions((index):end)];
-        end
-        
-        function removeGeneratedFunction(self, index)
-           self.generatedFunctions = [self.generatedFunctions(1:(index - 1)) self.generatedFunctions((index + 1):end)]; 
-        end
-        
-        function correlantsColToAdd = calculateNewCorrelants(self, insertionIndex)
-            generatedFunctionsCount = self.getSize();
-            correlantsColToAdd = zeros(generatedFunctionsCount, 1);
-            for i = 1:generatedFunctionsCount
-                correlantsColToAdd(i) = self.calculateCorrelant(i, insertionIndex);
-            end
-        end
-        
-        function populateCorrelantsMatrix(self, correlantsColToAdd, insertionIndex)
-            generatedFunctionsCount = self.getSize();
-            tempMatrix1 = self.correlantsMatrix;
-            tempMatrix2 = [tempMatrix1(:, 1:(insertionIndex - 1)) zeros(generatedFunctionsCount - 1, 1) tempMatrix1(:, insertionIndex:end)];
-            newCorrelantsMatrix = [tempMatrix2(1:(insertionIndex - 1), :);
-                zeros(1, generatedFunctionsCount);
-                tempMatrix2(insertionIndex:end, :)];
-            newCorrelantsMatrix(:, insertionIndex) = correlantsColToAdd;
-            newCorrelantsMatrix(insertionIndex, :) = correlantsColToAdd';
-            self.correlantsMatrix = newCorrelantsMatrix;
-        end
-        
-        function removeCorrelantsOfGeneratedFunction(self, index)
-            tempMatrix1 = self.correlantsMatrix;
-            tempMatrix2 = [tempMatrix1(:, 1:(index - 1)) tempMatrix1(:, (index + 1):end)];
-            newCorrelantsMatrix = [tempMatrix2(1:(index - 1), :);
-                                   tempMatrix2((index + 1):end, :)];
-            self.correlantsMatrix = newCorrelantsMatrix;           
-        end
-        
+
+       
     end
 end
