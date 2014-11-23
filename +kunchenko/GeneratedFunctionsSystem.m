@@ -90,18 +90,5 @@ classdef GeneratedFunctionsSystem < handle
            self.generatedFunctions = [self.generatedFunctions(1:(index - 1)) self.generatedFunctions((index + 1):end)]; 
             
         end
-        
-        % Returns cell-array of generated functions without cardinal function
-        function generatedFunctionsWithoutCardinalFunction = getGeneratedFunctionsWithoutCardinalFunction(self)
-            tempVector1 = [self.generatedFunctions(1: (self.cardinalFunctionIndex - 1)) self.generatedFunctions((self.cardinalFunctionIndex + 1):end)];
-            generatedFunctionsWithoutCardinalFunction = tempVector1;
-        end
-        
-    end
-    
-    methods(Access = private)
-        
-
-       
     end
 end
