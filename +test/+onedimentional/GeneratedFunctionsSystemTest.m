@@ -64,7 +64,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
             template = self.generatedFunctionsSystem.generatedFunctions{self.cardinalFunctionIndex};
             oldSize = length(self.generatedFunctionsSystem.generatedFunctions);
             
-            self.generatedFunctionsSystem.insert(template, self.cardinalFunctionIndex);
+            [self.generatedFunctionsSystem.generatedFunctions self.generatedFunctionsSystem.correlantsMatrix] = insert(template, self.cardinalFunctionIndex, self.generatedFunctionsSystem.generatedFunctions, self.generatedFunctionsSystem.correlantsMatrix, self.generatedFunctionsSystem.step, self.generatedFunctionsSystem.calculateCorrelantFunction);
             
             assertEqual(oldSize + 1, length(self.generatedFunctionsSystem.generatedFunctions));
             assertEqual(template, self.generatedFunctionsSystem.generatedFunctions{self.cardinalFunctionIndex});
@@ -92,7 +92,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
 
             functionToInsert = generatedFunctionsSystemLocal.generatedFunctions{cardinalFunctionIndexLocal};
             insertionIndex = cardinalFunctionIndexLocal;
-            generatedFunctionsSystemLocal.insert(functionToInsert, insertionIndex);
+            [generatedFunctionsSystemLocal.generatedFunctions generatedFunctionsSystemLocal.correlantsMatrix] = insert(functionToInsert, insertionIndex, generatedFunctionsSystemLocal.generatedFunctions, generatedFunctionsSystemLocal.correlantsMatrix, generatedFunctionsSystemLocal.step, generatedFunctionsSystemLocal.calculateCorrelantFunction);
             
             cardinalFunctionIndexLocalAfter = [   1   0.5   0.5   1/3
                                                 0.5   1/3   1/3  0.25

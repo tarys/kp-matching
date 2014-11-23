@@ -52,29 +52,4 @@ classdef GeneratedFunctionsSystem < handle
         end
         
     end
-    
-    methods
-        
-        % Insert generated function into specified position
-        function insert(self, functionToInsert, insertionIndex)
-            self.generatedFunctions = [self.generatedFunctions(1:(insertionIndex - 1)) functionToInsert self.generatedFunctions((insertionIndex):end)];
-            
-            generatedFunctionsCount = length(self.generatedFunctions);
-            correlantsColToAdd = zeros(generatedFunctionsCount, 1);
-            for i = 1:generatedFunctionsCount
-                correlantsColToAdd(i) = self.calculateCorrelantFunction(self.generatedFunctions{i}, self.generatedFunctions{insertionIndex}, self.step);
-            end
-            
-            
-            % populateCorrelantsMatrix
-            tempMatrix1 = self.correlantsMatrix;
-            tempMatrix2 = [tempMatrix1(:, 1:(insertionIndex - 1)) zeros(generatedFunctionsCount - 1, 1) tempMatrix1(:, insertionIndex:end)];
-            newCorrelantsMatrix = [tempMatrix2(1:(insertionIndex - 1), :);
-                zeros(1, generatedFunctionsCount);
-                tempMatrix2(insertionIndex:end, :)];
-            newCorrelantsMatrix(:, insertionIndex) = correlantsColToAdd;
-            newCorrelantsMatrix(insertionIndex, :) = correlantsColToAdd';
-            self.correlantsMatrix = newCorrelantsMatrix;
-        end        
-    end
 end
