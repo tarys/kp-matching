@@ -69,7 +69,9 @@ classdef GeneratedFunctionsSystemTest < TestCase
             assertEqual(oldSize + 1, length(self.generatedFunctionsSystem.generatedFunctions));
             assertEqual(template, self.generatedFunctionsSystem.generatedFunctions{self.cardinalFunctionIndex});
             
-            self.generatedFunctionsSystem.remove(self.cardinalFunctionIndex);
+            [self.generatedFunctionsSystem.generatedFunctions self.generatedFunctionsSystem.correlantsMatrix] = remove(self.cardinalFunctionIndex,...
+                self.generatedFunctionsSystem.generatedFunctions,...
+                self.generatedFunctionsSystem.correlantsMatrix);
             
             assertEqual(oldSize, length(self.generatedFunctionsSystem.generatedFunctions));
         end
@@ -98,7 +100,9 @@ classdef GeneratedFunctionsSystemTest < TestCase
                                                 1/3  0.25  0.25   0.2];
             assertElementsAlmostEqual(cardinalFunctionIndexLocalAfter, generatedFunctionsSystemLocal.correlantsMatrix, 'absolute', 10e-5);
             
-            generatedFunctionsSystemLocal.remove(insertionIndex);
+            [generatedFunctionsSystemLocal.generatedFunctions generatedFunctionsSystemLocal.correlantsMatrix] = remove(insertionIndex,...
+                generatedFunctionsSystemLocal.generatedFunctions,...
+                generatedFunctionsSystemLocal.correlantsMatrix);
             assertElementsAlmostEqual(cardinalFunctionIndexLocalBefore, generatedFunctionsSystemLocal.correlantsMatrix, 'absolute', 10e-5);
         end
     end

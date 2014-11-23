@@ -35,8 +35,9 @@ function matchingResult = match(signal, template, step, generativeTransforms, ca
         functions = generatedFunctionsSystem;
         functions.insert(windowSignal, generatedFunctionsSystem.cardinalFunctionIndex);
         approximationResult = approximate(functions);
-        functions.remove(generatedFunctionsSystem.cardinalFunctionIndex);
-        
+        [generatedFunctionsSystem.generatedFunctions generatedFunctionsSystem.correlantsMatrix] = remove(generatedFunctionsSystem.cardinalFunctionIndex, ...
+                                                                       generatedFunctionsSystem.generatedFunctions, ...
+                                                                       generatedFunctionsSystem.correlantsMatrix);        
         
         
         effectogramIterator.next();

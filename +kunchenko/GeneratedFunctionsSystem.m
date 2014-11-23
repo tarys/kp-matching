@@ -1,7 +1,7 @@
 classdef GeneratedFunctionsSystem < handle
     %GENERATEDFUNCTIONSSYSTEM Represents 1D immutable data-class that contains ALL information about generated functions system +
     %holds correlants
-    properties(SetAccess = private, GetAccess = public)
+    properties(SetAccess = public, GetAccess = public)
         domain
         step
         generatedFunctions
@@ -75,20 +75,6 @@ classdef GeneratedFunctionsSystem < handle
             newCorrelantsMatrix(:, insertionIndex) = correlantsColToAdd;
             newCorrelantsMatrix(insertionIndex, :) = correlantsColToAdd';
             self.correlantsMatrix = newCorrelantsMatrix;
-        end
-        
-        % Remove generated function by its index
-        function remove(self, index)
-            % removeCorrelantsOfGeneratedFunction
-            tempMatrix1 = self.correlantsMatrix;
-            tempMatrix2 = [tempMatrix1(:, 1:(index - 1)) tempMatrix1(:, (index + 1):end)];
-            newCorrelantsMatrix = [tempMatrix2(1:(index - 1), :);
-                                   tempMatrix2((index + 1):end, :)];
-            self.correlantsMatrix = newCorrelantsMatrix; 
-            
-           % removeGeneratedFunction 
-           self.generatedFunctions = [self.generatedFunctions(1:(index - 1)) self.generatedFunctions((index + 1):end)]; 
-            
-        end
+        end        
     end
 end
