@@ -29,7 +29,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
             
             self.generativeTransforms = generateGenerativeTransforms('int', generativeTransformsCount);
             calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
-            self.generatedFunctionsSystem = GeneratedFunctionsSystem.build(self.lowerBound:self.step:self.higherBound, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
+            self.generatedFunctionsSystem = buildGeneratedFunctionsSystem(self.lowerBound:self.step:self.higherBound, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
         end
         
         function testIntervalConstructor(self)
@@ -53,7 +53,7 @@ classdef GeneratedFunctionsSystemTest < TestCase
             import kunchenko.*;
             template = self.generativeTransforms{self.cardinalFunctionIndex}(self.lowerBound:self.step:self.higherBound);
             calculateCorrelantFunction = @calculateOneDimentionalCorrelant;
-            generatedFunctionsSystemFromTemplate = GeneratedFunctionsSystem.build(template, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
+            generatedFunctionsSystemFromTemplate = buildGeneratedFunctionsSystem(template, self.step, self.generativeTransforms, self.cardinalFunctionIndex, calculateCorrelantFunction);
             generatedFunctions = generatedFunctionsSystemFromTemplate.generatedFunctions;
             for i = 1:length(generatedFunctionsSystemFromTemplate)
                 assertEqual(self.generativeTransforms{i}(self.lowerBound:self.step:self.higherBound), generatedFunctions{i});

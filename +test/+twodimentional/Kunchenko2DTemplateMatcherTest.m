@@ -28,7 +28,7 @@ classdef Kunchenko2DTemplateMatcherTest < TestCase
             generativeTransformsWithIncludedCardinalFunction{4} = @(x)x.^2;
             generativeTransformsWithIncludedCardinalFunction{5} = @(x)x.^3;
             
-            generatedFunctionsSystem = GeneratedFunctionsSystem.build(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
+            generatedFunctionsSystem = buildGeneratedFunctionsSystem(template, step, generativeTransformsWithIncludedCardinalFunction, cardinalFunctionIndex, @calculateTwoDimentionalCorrelant);
             
             resultOfApproximationWithIncludedCardinalFunction = approximate(generatedFunctionsSystem);
             
