@@ -8,8 +8,8 @@ function [] = thresholdEeg()
     plot(eeg);
 endfunction
 
-eegMatlabFileName = uigetfile(["*.mat";]);
-loadmatfile(eegMatlabFileName);
+eegScilabDataFileName = uigetfile(["*.sod";]);
+load(eegScilabDataFileName, "eeg");
 
 
 mainWindow = gcf();
