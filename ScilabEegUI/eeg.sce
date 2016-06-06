@@ -8,7 +8,14 @@ function [] = thresholdEeg()
     plot(eeg);
 endfunction
 
-eegScilabDataFileName = uigetfile(["*.sod";]);
+
+// load EEG for stationary mode
+// to find out max amplitude of "zero-signal"
+// The value of max will be used as threshold for EEG dataset
+// where real artifact will be searched.
+
+
+eegScilabDataFileName = uigetfile(["*.sod";], ".", "Выберите ЭЭГ в режиме покоя");
 load(eegScilabDataFileName, "eeg");
 
 
