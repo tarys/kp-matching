@@ -52,6 +52,10 @@ for i = 1:30
         else
             kunchenko_confusion(1, 2) = kunchenko_confusion(1, 2) + 1; % False Negative case
         end
+        
+        %% JOINT PROBABLITY method
+        pd = fitdist(mixed_signal','Normal');
+        
     else % for remaining 10 of 30 signals we do NOT add eyeblinks
         %% run KP algorithm
         [~, ~, effectogram] = KunchenkoNew(signal, eye_blink, generatedFunctions);
